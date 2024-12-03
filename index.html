@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom ChatGPT</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="chat-app">
+    <!-- Sidebar for Chat History -->
+    <aside class="chat-history">
+      <h2>Chat History</h2>
+      <ul id="history-list">
+        <!-- Chat sessions will be dynamically added here -->
+      </ul>
+    </aside>
+
+    <!-- Main Chat Section -->
+    <div class="chat-container">
+      <header class="chat-header">
+        <h1>ChatGPT</h1>
+      </header>
+      <main class="chat-main">
+        <div id="chat-window" class="chat-window"></div>
+        <div class="input-section">
+          <textarea id="user-input" placeholder="Send a message..." rows="1"></textarea>
+          <button id="send-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+              <path d="M2.01 21L23 12 2.01 3v7l15 2-15 2z"></path>
+            </svg>
+          </button>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
