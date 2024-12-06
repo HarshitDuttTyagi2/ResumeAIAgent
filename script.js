@@ -38,7 +38,7 @@ function loadChat(session) {
 // API call to fetch GPT response
 async function fetchGPTResponse(userMessage) {
   const apiUrl = 'https://my.orq.ai/v2/deployments/invoke';
-  const apiKey = 'your_api_key';
+  const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3Jrc3BhY2VJZCI6ImVjZTM3MzA3LWU3ZjUtNDY5ZS05MjMzLWIyOGI4ZDhhN2QyOSIsImlhdCI6MTczMzI0MDQ2MDc4MiwiaXNzIjoib3JxIn0.BQqpb-MpinzIadeN_72P9GiboJrwmJkNXYtEP-aYrGw';
 
   const requestBody = {
     key: "husain_bw",
@@ -99,3 +99,5 @@ userInput.addEventListener('keydown', (e) => {
     handleSendMessage();
   }
 });
+
+
