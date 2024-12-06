@@ -1,14 +1,12 @@
-// script.js
 const chatWindow = document.getElementById('chat-window');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const historyList = document.getElementById('history-list');
 
-// Store conversations in memory
 let chatHistory = [];
 let currentSession = [];
 
-// Function to add a message
+// Function to add a message to the chat
 function addMessage(role, text) {
   const messageDiv = document.createElement('div');
   messageDiv.className = `message ${role}`;
@@ -17,7 +15,7 @@ function addMessage(role, text) {
   chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to the bottom
 }
 
-// Function to save the current session to history
+// Save current chat session to history
 function saveToHistory() {
   if (currentSession.length > 0) {
     const historyItem = document.createElement('li');
@@ -26,56 +24,71 @@ function saveToHistory() {
     historyItem.addEventListener('click', () => loadChat(currentSession));
     historyList.appendChild(historyItem);
 
-    // Save session in memory
     chatHistory.push([...currentSession]);
     currentSession = [];
   }
 }
 
-// Function to load a chat session from history
+// Load a chat session from history
 function loadChat(session) {
-  chatWindow.innerHTML = ''; // Clear the chat window
-  session.forEach(({ role, text }) => addMessage(role, text));
+  chatWindow.innerHTML = '';
+  session.forEach(({ role, content }) => addMessage(role, content));
 }
 
-// Function to make an API call to the backend
+// API call to fetch GPT response
 async function fetchGPTResponse(userMessage) {
+  const apiUrl = 'https://my.orq.ai/v2/deployments/invoke';
+  const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3Jrc3BhY2VJZCI6ImVjZTM3MzA3LWU3ZjUtNDY5ZS05MjMzLWIyOGI4ZDhhN2QyOSIsImlhdCI6MTczMzI0MDQ2MDc4MiwiaXNzIjoib3JxIn0.BQqpb-MpinzIadeN_72P9GiboJrwmJkNXYtEP-aYrGw';
+
+  const requestBody = {
+    key: "husain_bw",
+    context: {
+      environments: []
+    },
+    metadata: {},
+    messages: currentSession
+  };
+
   try {
-    // const response = await fetch('/api/chat', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ message: userMessage }),
-    // });
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    });
 
-    // if (!response.ok) {
-    //   throw new Error(`Error: ${response.statusText}`);
-    // }
-
-    // const data = await response.json();
-    return 'Hi how are you.'//data.reply; // Assuming the backend returns a JSON object with a `reply` field
+    const data = await response.json();
+    return data.choices[0]?.message?.content || 'No response from server';
   } catch (error) {
-    console.error('Failed to fetch GPT response:', error);
-    return 'Oops! Something went wrong. Please try again.';
+    console.error(error);
+    return 'An error occurred. Please try again.';
   }
 }
 
-// Handle sending a message
+// Send a message
 async function handleSendMessage() {
   const userMessage = userInput.value.trim();
   if (!userMessage) return;
 
   addMessage('user', userMessage);
-  currentSession.push({ role: 'user', text: userMessage });
+  currentSession.push({ role: 'user', content: userMessage });
   userInput.value = '';
+  userInput.style.height = 'auto'; // Reset input height
 
   const botResponse = await fetchGPTResponse(userMessage);
   addMessage('gpt', botResponse);
-  currentSession.push({ role: 'gpt', text: botResponse });
+  currentSession.push({ role: 'assistant', content: botResponse });
 }
 
-// Save the session to history on page unload
+// Adjust textarea height dynamically
+userInput.addEventListener('input', () => {
+  userInput.style.height = 'auto';
+  userInput.style.height = `${userInput.scrollHeight}px`;
+});
+
+// Save session on unload
 window.addEventListener('beforeunload', saveToHistory);
 
 // Event listeners
