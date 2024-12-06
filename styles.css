@@ -1,167 +1,173 @@
+/* General Body Styling */
 body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #343541;
-    color: #d1d5db;
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .chat-app {
-    display: flex;
-    width: 100%;
-  }
-  
-  /* Chat History Section */
-  .chat-history {
-    width: 25%;
-    max-width: 300px;
-    background-color: #202123;
-    border-right: 1px solid #565869;
-    padding: 10px;
-    box-sizing: border-box;
-    overflow-y: auto;
-  }
-  
-  .chat-history h2 {
-    margin: 0 0 10px;
-    font-size: 18px;
-    color: #ffffff;
-  }
-  
-  #history-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  #history-list li {
-    padding: 10px;
-    margin-bottom: 5px;
-    background-color: #444654;
-    color: #ffffff;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  #history-list li:hover {
-    background-color: #565869;
-  }
-  
-  /* Chat Container */
-  .chat-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .chat-header {
-    background-color: #202123;
-    padding: 10px 20px;
-    text-align: center;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  /* Chat Main Section */
-  .chat-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  /* Chat Window with Scrollbar */
-  .chat-window {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 15px;
-    max-height: calc(100vh - 150px);
-    scrollbar-width: thin;
-    scrollbar-color: #565869 #444654;
-    box-sizing: border-box;
-  }
-  
-  .chat-window::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .chat-window::-webkit-scrollbar-thumb {
-    background: #565869;
-    border-radius: 4px;
-  }
-  
-  .chat-window::-webkit-scrollbar-thumb:hover {
-    background: #6b7280;
-  }
-  
-  .chat-window::-webkit-scrollbar-track {
-    background: #444654;
-  }
-  
-  .message {
-    margin-bottom: 10px;
-    padding: 10px 15px;
-    border-radius: 8px;
-    line-height: 1.5;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-  }
-  
-  .user {
-    background-color: #1a73e8;
-    color: #ffffff;
-    align-self: flex-end;
-  }
-  
-  .gpt {
-    background-color: #3e3f4b;
-    color: #ffffff;
-    align-self: flex-start;
-  }
-  
-  /* Input Section */
-  .input-section {
-    display: flex;
-    align-items: center;
-    background-color: #202123;
-    padding: 10px;
-    border-top: 1px solid #565869;
-  }
-  
-  textarea {
-    flex: 1;
-    border: none;
-    background: none;
-    color: #d1d5db;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
-    outline: none;
-    max-height: 150px;
-    overflow-y: auto;
-  }
-  
-  textarea::placeholder {
-    color: #6b7280;
-  }
-  
-  button {
-    background: none;
-    border: none;
-    color: #d1d5db;
-    cursor: pointer;
-    margin-left: 10px;
-    padding: 8px;
-    border-radius: 50%;
-    transition: background 0.3s;
-  }
-  
-  button:hover {
-    background: #565869;
-  }
-  
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #343541;
+  color: #d1d5db;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent scrolling outside the app */
+}
+
+/* Chat Application Container */
+.chat-app {
+  display: flex;
+  width: 100%;
+  height: 100%; /* Full height for the app */
+}
+
+/* Chat History Styling */
+.chat-history {
+  width: 25%;
+  max-width: 300px;
+  background-color: #202123;
+  border-right: 1px solid #565869;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.chat-history h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+#history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#history-list li {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #444654;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#history-list li:hover {
+  background-color: #565869;
+}
+
+/* Chat Container */
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chat Header */
+.chat-header {
+  background-color: #202123;
+  padding: 10px 20px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Chat Main Area */
+.chat-main {
+  flex: 1; /* Ensures this area takes up remaining space */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevents extra scrollbars */
+}
+
+/* Chat Window with Scroll */
+.chat-window {
+  flex: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 15px;
+  background-color: #2d2f36;
+  border-radius: 8px;
+  scrollbar-width: thin; /* Firefox scrollbar */
+  scrollbar-color: #565869 #343541;
+}
+
+/* Scrollbar Styling for WebKit */
+.chat-window::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-window::-webkit-scrollbar-thumb {
+  background: #565869;
+  border-radius: 4px;
+}
+
+.chat-window::-webkit-scrollbar-thumb:hover {
+  background: #737682;
+}
+
+.chat-window::-webkit-scrollbar-track {
+  background: #343541;
+}
+
+/* Individual Messages */
+.message {
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  line-height: 1.5;
+  max-width: 70%; /* Limit width to 70% of the chat window */
+  word-wrap: break-word; /* Break words to fit within the box */
+  white-space: pre-wrap; /* Preserve newlines and spaces */
+}
+
+.user {
+  background-color: #1a73e8;
+  color: #ffffff;
+  align-self: flex-end;
+}
+
+.gpt {
+  background-color: #3e3f4b;
+  color: #ffffff;
+  align-self: flex-start;
+}
+
+/* Input Section */
+.input-section {
+  display: flex;
+  align-items: center;
+  background-color: #202123;
+  padding: 10px;
+  border-top: 1px solid #565869;
+}
+
+textarea {
+  flex: 1;
+  border: none;
+  background: none;
+  color: #d1d5db;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  resize: none;
+  overflow-y: auto; /* Enable scrolling for large input */
+  outline: none;
+  max-height: 100px; /* Restrict input height */
+}
+
+textarea::placeholder {
+  color: #6b7280;
+}
+
+button {
+  background: none;
+  border: none;
+  color: #d1d5db;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #565869;
+}
