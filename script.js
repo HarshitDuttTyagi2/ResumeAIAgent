@@ -2,6 +2,8 @@ const chatWindow = document.getElementById('chat-window');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const historyList = document.getElementById('history-list');
+const inputSection = document.querySelector('.input-section'); // Added this line
+let hasFirstMessage = false;
 
 let chatHistory = [];
 let currentSession = [];
@@ -15,6 +17,13 @@ function addMessage(role, text) {
   chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to the bottom
 }
 
+function handleFirstMessage() {
+  if (!hasFirstMessage) {
+    inputSection.classList.remove('starting');
+    hasFirstMessage = true;
+  }
+}
+
 // Save current chat session to history
 function saveToHistory() {
   if (currentSession.length > 0) {
@@ -22,7 +31,9 @@ function saveToHistory() {
     const sessionTitle = `Chat #${chatHistory.length + 1}`;
     historyItem.textContent = sessionTitle;
     historyItem.addEventListener('click', () => loadChat(currentSession));
-    historyList.appendChild(historyItem);
+    if (historyList) {
+      historyList.appendChild(historyItem);
+    }
 
     chatHistory.push([...currentSession]);
     currentSession = [];
@@ -38,7 +49,7 @@ function loadChat(session) {
 // API call to fetch GPT response
 async function fetchGPTResponse(userMessage) {
   const apiUrl = 'https://my.orq.ai/v2/deployments/invoke';
-  const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3b3Jrc3BhY2VJZCI6ImVjZTM3MzA3LWU3ZjUtNDY5ZS05MjMzLWIyOGI4ZDhhN2QyOSIsImlhdCI6MTczMzI0MDQ2MDc4MiwiaXNzIjoib3JxIn0.BQqpb-MpinzIadeN_72P9GiboJrwmJkNXYtEP-aYrGw';
+  const apiKey = 'enter_your_api_key';
 
   const requestBody = {
     key: "husain_bw",
@@ -72,6 +83,8 @@ async function handleSendMessage() {
   const userMessage = userInput.value.trim();
   if (!userMessage) return;
 
+  handleFirstMessage();
+
   addMessage('user', userMessage);
   currentSession.push({ role: 'user', content: userMessage });
   userInput.value = '';
@@ -99,5 +112,3 @@ userInput.addEventListener('keydown', (e) => {
     handleSendMessage();
   }
 });
-
-
