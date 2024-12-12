@@ -8,7 +8,7 @@ let hasFirstMessage = false;
 let chatHistory = [];
 let currentSession = [];
 
-// Function to add a message to the chat
+// Function to add a message to the chats
 function addMessage(role, text) {
   const messageDiv = document.createElement('div');
   messageDiv.className = `message ${role}`;
