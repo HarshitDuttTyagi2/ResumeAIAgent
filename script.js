@@ -47,17 +47,15 @@ function loadChat(session) {
 }
 
 // API call to fetch GPT response
+// API call to fetch GPT response
 async function fetchGPTResponse(userMessage) {
-  const apiUrl = 'https://my.orq.ai/v2/deployments/invoke';
-  const apiKey = 'enter_your_api_key';
-
+  const apiUrl = 'https://api.openai.com/v1/chat/completions';
+  const apiKey = 'apikey';
+  let systemPrompt = 'act like a jocker'
+  let data = [{'role': 'system', 'content': systemPrompt}].concat(currentSession);
   const requestBody = {
-    key: "husain_bw",
-    context: {
-      environments: []
-    },
-    metadata: {},
-    messages: currentSession
+    model: 'gpt-4o',
+    messages: data
   };
 
   try {
@@ -70,14 +68,20 @@ async function fetchGPTResponse(userMessage) {
       body: JSON.stringify(requestBody)
     });
 
+    if (!response.ok) {
+      // Handle HTTP errors
+      const errorData = await response.json();
+      console.error('Error from OpenAI API:', errorData);
+      return 'An error occurred while fetching the response.';
+    }
+
     const data = await response.json();
-    return data.choices[0]?.message?.content || 'No response from server';
+    return data.choices[0]?.message?.content.trim() || 'No response from server';
   } catch (error) {
-    console.error(error);
+    console.error('Fetch error:', error);
     return 'An error occurred. Please try again.';
   }
 }
-
 // Send a message
 async function handleSendMessage() {
   const userMessage = userInput.value.trim();
