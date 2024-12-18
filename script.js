@@ -71,13 +71,26 @@ async function fetchGPTResponse(userMessage) {
 
     if (!response.ok) {
       // Handle HTTP errors
-      const errorData = await response.json();
+      const errorData = await response.text();
       console.error('Error from serverless function:', errorData);
-      return 'An error occurred while fetching the response.';
+      return `Error: ${errorData || 'An error occurred while fetching the response.'}`;
     }
 
-    const data = await response.json();
-    return data.choices[0]?.message?.content.trim() || 'No response from server';
+    // Try parsing the response as JSON
+    let data;
+    try {
+      data = await response.json();
+    } catch (jsonError) {
+      console.error('Error parsing response as JSON:', jsonError);
+      return 'The server returned an invalid response. Please try again later.';
+    }
+
+    if (data.choices && data.choices[0]?.message?.content) {
+      return data.choices[0].message.content.trim() || 'No response from server';
+    } else {
+      return 'Unexpected response structure from the API.';
+    }
+
   } catch (error) {
     console.error('Fetch error:', error);
     return 'An error occurred. Please try again.';
