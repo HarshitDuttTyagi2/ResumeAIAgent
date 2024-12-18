@@ -47,6 +47,7 @@ function loadChat(session) {
 }
 
 // API call to fetch GPT response using the serverless function
+// Function to add timeout to fetch request
 async function fetchGPTResponse(userMessage) {
 
   const apiUrl = '/api/chat'; // Path to the serverless function
@@ -60,14 +61,20 @@ async function fetchGPTResponse(userMessage) {
     prompt: systemPrompt, // Send system prompt
   };
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 90000); // Set timeout to 20 seconds
+
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestBody), // Send chat session and system prompt to serverless function
+      body: JSON.stringify(requestBody),
+      signal: controller.signal, // Attach the abort signal to the fetch request
     });
+
+    clearTimeout(timeoutId); // Clear timeout if the request completes in time
 
     if (!response.ok) {
       // Handle HTTP errors
@@ -92,10 +99,15 @@ async function fetchGPTResponse(userMessage) {
     }
 
   } catch (error) {
+    if (error.name === 'AbortError') {
+      console.error('Request timed out');
+      return 'The request timed out. Please try again later.';
+    }
     console.error('Fetch error:', error);
     return 'An error occurred. Please try again.';
   }
 }
+
 
 // Send a message
 async function handleSendMessage() {

@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
 
   const requestBody = {
-    model: 'gpt-4',
+    model: 'gpt-4o',
     messages: [{ role: 'system', content: systemPrompt }, ...currentSession],
   };
 
