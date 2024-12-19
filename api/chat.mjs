@@ -71,7 +71,7 @@ const systemPrompt = 'TASK: ' +
   const requestBody = {
     model: 'gpt-4o',
     messages: [{ role: 'system', content: systemPrompt }, ...currentSession],
-    max_completion_tokens : 10000
+    // max_completion_tokens : 10000
   };
 
   try {
