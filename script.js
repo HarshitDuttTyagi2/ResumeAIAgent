@@ -104,7 +104,7 @@ async function fetchGPTResponse(userMessage) {
   };
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 90000); // Set timeout to 20 seconds
+  const timeoutId = setTimeout(() => controller.abort(), 990000); // Set timeout to 20 seconds
 
   try {
     const response = await fetch(apiUrl, {
